@@ -135,16 +135,16 @@ public class Sudoku {
 
 
 
-	private int[][] grid;
-	private List<Spot> emptySpots;
+	private final int[][] grid;
+	private final List<Spot> emptySpots;
 	private int solutionsFound;
 	private long elapsedTime;
 	private String firstSolutionText;
 
 
 	public class Spot implements Comparable<Spot>{
-		private int row;
-		private int column;
+		private final int row;
+		private final int column;
 
 		public Spot(int row, int column) {
 			this.row = row;

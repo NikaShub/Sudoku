@@ -132,15 +132,79 @@ public class Sudoku {
 		System.out.println("elapsed:" + sudoku.getElapsed() + "ms");
 		System.out.println(sudoku.getSolutionText());
 	}
-	
-	
-	
+
+
+
+	private int[][] grid;
+	private List<Spot> emptySpots;
+	private int solutionsFound;
+	private long elapsedTime;
+	private String firstSolutionText;
+
+
+	public class Spot implements Comparable<Spot>{
+		private int row;
+		private int column;
+
+		public Spot(int row, int column) {
+			this.row = row;
+			this.column = column;
+		}
+
+		public int getVal() {
+			return grid[row][column];
+		}
+
+		public void setVal(int val) {
+			grid[row][column] = val;
+		}
+
+		public Set<Integer> getAssignableNumbers() {
+			Set<Integer> validNumbers = new HashSet<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
+
+			for (int i = 0; i < SIZE; i++) {
+				validNumbers.remove(grid[row][i]);
+				validNumbers.remove(grid[i][column]);
+			}
+
+			int startRow = (row / PART) * PART;
+			int startCol = (column / PART) * PART;
+			for (int i = 0; i < PART; i++) {
+				for (int j = 0; j < PART; j++) {
+					validNumbers.remove(grid[startRow + i][startCol + j]);
+				}
+			}
+
+			return validNumbers;
+		}
+
+		@Override
+		public int compareTo(Spot spot) {
+			return Integer.compare(this.getAssignableNumbers().size(), spot.getAssignableNumbers().size());
+		}
+	}
+
 
 	/**
 	 * Sets up based on the given ints.
 	 */
 	public Sudoku(int[][] ints) {
-		// YOUR CODE HERE
+		grid = new int[SIZE][SIZE];
+		emptySpots = new ArrayList<>();
+		solutionsFound = 0;
+		elapsedTime = 0;
+		firstSolutionText = "";
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				Spot spot = new Spot(i, j);
+				spot.setVal(ints[i][j]);
+				if (spot.getVal() == 0) emptySpots.add(spot);
+			}
+		}
+	}
+
+	public Sudoku(String args) {
+		this(textToGrid(args));
 	}
 	
 	
@@ -149,15 +213,46 @@ public class Sudoku {
 	 * Solves the puzzle, invoking the underlying recursive search.
 	 */
 	public int solve() {
-		return 0; // YOUR CODE HERE
+		long startTime = System.currentTimeMillis();
+		Collections.sort(emptySpots);
+		solveHelper(0);
+		elapsedTime = System.currentTimeMillis() - startTime;
+		return solutionsFound;
 	}
-	
+
+	private void solveHelper(int index) {
+		if (solutionsFound >= 100) return;
+		if (index == emptySpots.size()) {
+			if (firstSolutionText.isEmpty()) firstSolutionText = this.toString();
+			solutionsFound++;
+			return;
+		}
+		Spot curSpot = emptySpots.get(index);
+		Set<Integer> numbersWeCan = curSpot.getAssignableNumbers();
+		for (int num : numbersWeCan) {
+			curSpot.setVal(num);
+			solveHelper(index + 1);
+			curSpot.setVal(0);
+		}
+	}
+
 	public String getSolutionText() {
-		return ""; // YOUR CODE HERE
+		return firstSolutionText;
 	}
 	
 	public long getElapsed() {
-		return 0; // YOUR CODE HERE
+		return elapsedTime;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				sb.append(grid[i][j]).append(" ");
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
 }

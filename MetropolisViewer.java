@@ -5,22 +5,30 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MetropolisViewer extends JFrame {
+
     private JTextField metropolis;
     private JTextField continent;
     private JTextField population;
+
     private JLabel searchOptions;
+
     private JButton addButton;
     private JButton searchButton;
+
     private JComboBox<String> popLargeOrLessEqual;
     private JComboBox<String> matchOrPartial;
+
     private JTable table;
+
     private MetropolisTableModel tableModel;
 
     public MetropolisViewer() {
         super("Metropolis Viewer");
         tableModel = new MetropolisTableModel();
+
         addGUI();
         setUpListeners();
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
@@ -63,12 +71,15 @@ public class MetropolisViewer extends JFrame {
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         topPanel.add(new JLabel("Metropolis: "));
+
         metropolis = new JTextField(15);
         topPanel.add(metropolis);
         topPanel.add(new JLabel("Continent: "));
+
         continent = new JTextField(15);
         topPanel.add(continent);
         topPanel.add(new JLabel("Population: "));
+
         population = new JTextField(15);
         topPanel.add(population);
         add(topPanel, BorderLayout.NORTH);
@@ -91,18 +102,24 @@ public class MetropolisViewer extends JFrame {
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
         searchOptions = new JLabel("search options: ");
         searchOptions.setVisible(true);
+
         addButton = new JButton("Add");
+
         searchButton = new JButton("Search");
+
         String[] popOptions = {"Population Larger Than", "Population Smaller Than or Equal"};
         popLargeOrLessEqual = new JComboBox<>(popOptions);
+
         String[] matchOptions = {"Exact Match", "Partial Match"};
         matchOrPartial = new JComboBox<>(matchOptions);
+
         Dimension maxSize = new Dimension(Integer.MAX_VALUE, 70);
         searchOptions.setMaximumSize(maxSize);
         addButton.setMaximumSize(maxSize);
         searchButton.setMaximumSize(maxSize);
         popLargeOrLessEqual.setMaximumSize(maxSize);
         matchOrPartial.setMaximumSize(maxSize);
+
         rightPanel.add(addButton);
         rightPanel.add(searchButton);
         rightPanel.add(searchOptions);

@@ -31,6 +31,7 @@ public class MetropolisTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int index, int columnIndex) {
         Metropolis mp = metropolises.get(index);
+
         switch (columnIndex) {
             case 0: return mp.getName();
             case 1: return mp.getContinent();
@@ -54,10 +55,11 @@ public class MetropolisTableModel extends AbstractTableModel {
         } catch (NumberFormatException ignored) {
             throw new IllegalArgumentException();
         }
-        Metropolis m = new Metropolis(name, continent, population);
-        dao.addMetropolis(m);
+
+        Metropolis metro = new Metropolis(name, continent, population);
+        dao.addMetropolis(metro);
         metropolises = new ArrayList<>();
-        metropolises.add(m);
+        metropolises.add(metro);
         fireTableDataChanged();
     }
 

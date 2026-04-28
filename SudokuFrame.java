@@ -56,10 +56,12 @@ import java.awt.event.*;
 		 puzzleArea = new JTextArea(15, 20);
 		 puzzleArea.setBorder(new TitledBorder("Puzzle"));
 		 add(puzzleArea, BorderLayout.CENTER);
+
 		 solutionArea = new JTextArea(15, 20);
 		 solutionArea.setBorder(new TitledBorder("Solution"));
 		 solutionArea.setEditable(false);
 		 add(solutionArea, BorderLayout.EAST);
+
 		 Box controlBox = Box.createHorizontalBox();
 		 checkButton = new JButton("Check");
 		 autoCheck = new JCheckBox("Auto Check", true);
@@ -73,9 +75,11 @@ import java.awt.event.*;
 			String text = puzzleArea.getText();
 			Sudoku board = new Sudoku(text);
 			int count = board.solve();
+
 			String result = board.getSolutionText() + "\n";
 			result += "solutions: " + count + "\n";
 			result += "time: " + board.getElapsed() + "ms\n";
+
 			solutionArea.setText(result);
 		} catch (Exception ex) {
 			solutionArea.setText("Parsing problem");

@@ -24,6 +24,7 @@ public class MetropolisDAO {
      */
     public void addMetropolis(Metropolis m) {
         String query = "INSERT INTO metropolises (metropolis, continent, population) VALUES (?, ?, ?)";
+
         try (Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, m.getName());
             stmt.setString(2, m.getContinent());
@@ -55,10 +56,13 @@ public class MetropolisDAO {
 
         try (Connection con = getConnection();
              PreparedStatement stmt = con.prepareStatement(query.toString())) {
+
             for (int i = 0; i < args.size(); i++) {
-                stmt.setObject(i + 1, args.get(i));
+                stmt.setObject(i + 1, args.get(i));   // here I am changing ?-s to args, which is name, population or continent
             }
+
             ResultSet rs = stmt.executeQuery();
+
             while(rs.next()) {
                 result.add(new Metropolis(
                         rs.getString("metropolis"),
@@ -78,8 +82,10 @@ public class MetropolisDAO {
         if (population != null && !population.isEmpty()) {
             try {
                 long popNum = Long.parseLong(population);
+
                 if (populationLarger) query.append("AND population > ? ");
                 else query.append("AND population <= ? ");
+
                 args.add(popNum);
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException(e);

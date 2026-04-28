@@ -65,9 +65,11 @@ public class Sudoku {
 	 */
 	public static int[][] stringsToGrid(String... rows) {
 		int[][] result = new int[rows.length][];
+
 		for (int row = 0; row<rows.length; row++) {
 			result[row] = stringToInts(rows[row]);
 		}
+
 		return result;
 	}
 	
@@ -194,6 +196,7 @@ public class Sudoku {
 		solutionsFound = 0;
 		elapsedTime = 0;
 		firstSolutionText = "";
+
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				Spot spot = new Spot(i, j);
@@ -201,6 +204,7 @@ public class Sudoku {
 				if (spot.getVal() == 0) emptySpots.add(spot);
 			}
 		}
+
 	}
 
 	public Sudoku(String args) {
@@ -222,13 +226,16 @@ public class Sudoku {
 
 	private void solveHelper(int index) {
 		if (solutionsFound >= 100) return;
+
 		if (index == emptySpots.size()) {
 			if (firstSolutionText.isEmpty()) firstSolutionText = this.toString();
 			solutionsFound++;
 			return;
 		}
+
 		Spot curSpot = emptySpots.get(index);
 		Set<Integer> numbersWeCan = curSpot.getAssignableNumbers();
+
 		for (int num : numbersWeCan) {
 			curSpot.setVal(num);
 			solveHelper(index + 1);
@@ -247,12 +254,14 @@ public class Sudoku {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				sb.append(grid[i][j]).append(" ");
 			}
 			sb.append("\n");
 		}
+
 		return sb.toString();
 	}
 }

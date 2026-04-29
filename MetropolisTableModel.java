@@ -42,7 +42,7 @@ public class MetropolisTableModel extends AbstractTableModel {
 
     /**
      * adds polis into base and renews table and only shows this row which we added on view
-     * * @param name city name
+     * @param name city name
      * @param continent continent
      * @param populationStr population but as a string, because we have it from user
      */
@@ -56,10 +56,10 @@ public class MetropolisTableModel extends AbstractTableModel {
             throw new IllegalArgumentException();
         }
 
-        Metropolis metro = new Metropolis(name, continent, population);
-        dao.addMetropolis(metro);
+        Metropolis polis = new Metropolis(name, continent, population);
+        dao.addMetropolis(polis);
         metropolises = new ArrayList<>();
-        metropolises.add(metro);
+        metropolises.add(polis);
         fireTableDataChanged();
     }
 

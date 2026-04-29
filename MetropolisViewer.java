@@ -10,8 +10,6 @@ public class MetropolisViewer extends JFrame {
     private JTextField continent;
     private JTextField population;
 
-    private JLabel searchOptions;
-
     private JButton addButton;
     private JButton searchButton;
 
@@ -20,7 +18,7 @@ public class MetropolisViewer extends JFrame {
 
     private JTable table;
 
-    private MetropolisTableModel tableModel;
+    private final MetropolisTableModel tableModel;
 
     public MetropolisViewer() {
         super("Metropolis Viewer");
@@ -100,7 +98,7 @@ public class MetropolisViewer extends JFrame {
     private void addDropDownsAndButtons() {
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
-        searchOptions = new JLabel("search options: ");
+        JLabel searchOptions = new JLabel("search options: ");
         searchOptions.setVisible(true);
 
         addButton = new JButton("Add");

@@ -3,16 +3,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MetropolisDAO {
-    private static final String URL = "jdbc:mysql://localhost:3306/metropolis_db?allowPublicKeyRetrieval=true&useSSL=false";
-    private static final String USER = "nika";
-    private static final String PASSWORD = "1234";
+    private String url;
+    private String user;
+    private String password;
+
+
+
+    public MetropolisDAO() {
+        this.url = "jdbc:mysql://localhost:3306/metropolis_db?allowPublicKeyRetrieval=true&useSSL=false";
+        this.user = "nika";
+        this.password = "1234";
+    }
+
+    // i created this cosntructor becasue, of test cases, i use h2 and it need specific user and password
+    public MetropolisDAO(String url, String user, String password) {
+        this.url = url;
+        this.user = user;
+        this.password = password;
+    }
 
     /**
      * Makes contact with base
      */
     private Connection getConnection() {
         try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -20,15 +35,15 @@ public class MetropolisDAO {
 
     /**
      * adds new polis into base
-     * * @param m Metropolis polis object
+     * @param polis Metropolis polis object
      */
-    public void addMetropolis(Metropolis m) {
+    public void addMetropolis(Metropolis polis) {
         String query = "INSERT INTO metropolises (metropolis, continent, population) VALUES (?, ?, ?)";
 
         try (Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
-            stmt.setString(1, m.getName());
-            stmt.setString(2, m.getContinent());
-            stmt.setLong(3, m.getPopulation());
+            stmt.setString(1, polis.getName());
+            stmt.setString(2, polis.getContinent());
+            stmt.setLong(3, polis.getPopulation());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

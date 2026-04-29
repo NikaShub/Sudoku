@@ -292,7 +292,7 @@ public class SudokuTest {
 
 
     @Test(expected = RuntimeException.class)
-    public void testInvalidStringLengthThrowsException() {
+    public void testInvalidString() {
         Sudoku.textToGrid("1 2 3 4 5 6 7 8 9 0");
     }
 

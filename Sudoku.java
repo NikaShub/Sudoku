@@ -138,7 +138,9 @@ public class Sudoku {
 
 
 	private final int[][] grid;
+
 	private final List<Spot> emptySpots;
+
 	private int solutionsFound;
 	private long elapsedTime;
 	private String firstSolutionText;
@@ -253,15 +255,15 @@ public class Sudoku {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
+		StringBuilder gridAsString = new StringBuilder();
 
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				sb.append(grid[i][j]).append(" ");
+				gridAsString.append(grid[i][j]).append(" ");
 			}
-			sb.append("\n");
+			gridAsString.append("\n");
 		}
 
-		return sb.toString();
+		return gridAsString.toString();
 	}
 }
